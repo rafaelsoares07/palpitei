@@ -1,20 +1,32 @@
 import styled from "styled-components"
-import { Link } from "react-router-dom"
-import { useState } from "react"
+import { Link, Navigate, useNavigate} from "react-router-dom"
+import { useState, useContext} from "react"
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import axios from "axios"
-
-
 import logo from "../../images/logo_palpitei.png"
+
+import TokenContext from "../../context/tokenContext"
+
 
 export default function SignIn(){
 
+    const navigate = useNavigate()
+
+    //Contexts
+    const {token, setToken, setUserLogado, userLogado,permissions,setPermissions} = useContext(TokenContext)
+
+
+    // Modals Toastify
+    const notifyUserNotExists = () => toast.error("Usuaŕio ainda não tem um cadastro")
+    const notifyInvalidCredentials = () => toast.error("Credenciais informadas inválidas")
+    const notifyErrorEmail = () => toast.warn("Você deve preencher o campo com seu email válido")
     
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
 
-    console.log(email)
-    console.log(password)
 
     const URL = "http://localhost:5001"
 
@@ -28,19 +40,59 @@ export default function SignIn(){
 
         const promisse = axios.post(`${URL}/signin`, user)
 
-        promisse.then(el=>console.log(el))
+        promisse.then(loginUserSucess)
         promisse.catch(loginUserFail)
     }
 
     const loginUserFail = (error) =>{
-        console.log(error)
+        const messageError = error.response.data[0].message
+        const statusError = error.response.status
+
+        if (messageError == '"email" must be a valid email') {
+            return notifyErrorEmail()
+        }
+        if(statusError==404){
+            return notifyUserNotExists()
+        }
+        if(statusError==401){
+            return notifyInvalidCredentials()
+        }
     }
 
+    const loginUserSucess = (response) =>{
+        
+        setPermissions(response.data.userPermissions)
+
+        setToken(response.data.token)
+
+        const user ={
+            id:response.data.userExist.id,
+            name:response.data.userExist.name
+        }
+
+        setUserLogado(user)
+
+        if(response.data.userPermissions.length>0){
+            navigate("/painel-control")
+        }else{
+            navigate("/home")
+        }
+    }
 
     return(
         <>
         <Container>
-            
+   
+            <ToastContainer
+                position="top-center"
+                autoClose={1500}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+            />            
             <AreaInputs>
                 <img src={logo}/>
                 <input type="text" value ={email} onChange={(e)=>setEmail(e.target.value)} placeholder="Digite seu Email"></input>
