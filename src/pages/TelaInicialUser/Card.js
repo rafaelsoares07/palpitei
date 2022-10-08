@@ -1,11 +1,11 @@
-import { useEffect, useState, useContext } from "react"
+import { useEffect, useState, useContext, memo} from "react"
 import styled from "styled-components"
 
 import axios from "axios"
 import TokenContext from "../../context/tokenContext"
 
 
-export default function Card({matche,i}){
+function CardFormat({matche,i}){
 
     const {token} = useContext(TokenContext)
     
@@ -13,6 +13,7 @@ export default function Card({matche,i}){
     const [s2, setS2] = useState("")
     const [winner, setWinner] = useState("")
     const [isCorrect, setIsCorrect] = useState(undefined)
+    const [aux, setAux] = useState(false)
 
 
     const URL = "http://localhost:5001"
@@ -36,23 +37,21 @@ export default function Card({matche,i}){
         gameScoreTimeTwo: Number(s2),
     }
     
-    console.log('----------')
-    console.log(isCorrect)
-    console.log('----------')
-    
    
-    if(winner!="" && winner!="Empate" && s1!="" && s2!=""){
-        const promisse = axios.post(`${URL}/bets`,betWithWinner,config)
-
-        promisse.then(el=>console.log(el))
-        promisse.catch(err=>console.log(err))
+    if(winner!="" && s1!=undefined && s2!=undefined && aux==true){
+        
+        if(winner==="Empate"){
+            const promisse = axios.post(`${URL}/bets`,betWithWinner,config)
+            promisse.then(el=>console.log(el))
+            promisse.catch(err=>console.log(err))
+        }
+        else if(winner!=="Empate"){
+            const promisse = axios.post(`${URL}/bets`,betEmpate,config)
+            promisse.then(el=>console.log(el))
+            promisse.catch(err=>console.log(err))
+        }
     }
-    else if(winner!="" && winner=="Empate" && s1!="" && s2!=""){
-        const promisse = axios.post(`${URL}/bets`,betEmpate,config)
 
-        promisse.then(el=>console.log(el))
-        promisse.catch(err=>console.log(err))
-    }
 
  
     useEffect(()=>{
@@ -80,6 +79,8 @@ export default function Card({matche,i}){
             setWinner("Empate")
         }
 
+        console.log('erro do userEffect 1')
+
     },[s1,s2])
 
     useEffect(()=>{
@@ -90,21 +91,24 @@ export default function Card({matche,i}){
             setS2(response.data.gameScoreTimeTwo)
             setIsCorrect(response.data.correct) 
         })
+        console.log('erro do userEffect 2')
         promisse.catch(err=>console.log(err))
+
+        setAux(true) 
     },[])
 
 
     return(
         <Container>
-            <AreaMatches>
+            <AreaMatches correct={isCorrect} >
                 <Team>
                     {matche[i].Time1.sigla}
                     <img src={require(`../../images/bandeiras/${matche[i].Time1.sigla}.png`)}/>
-                    <input correct={isCorrect} value={s1} onChange={(el)=>setS1(el.target.value)} type="number"></input>
+                    <input value={s1} onChange={(el)=>setS1(el.target.value)} type="number"></input>
                 </Team>
                 <span>x</span>
                 <Team>
-                    <input correct={isCorrect} value={s2} onChange={(el)=>setS2(el.target.value)} type="number"></input>
+                    <input value={s2} onChange={(el)=>setS2(el.target.value)} type="number"></input>
                     <img src={require(`../../images/bandeiras/${matche[i].Time2.sigla}.png`)}/>
                     {matche[i].Time2.sigla}
                     
@@ -114,6 +118,10 @@ export default function Card({matche,i}){
         </Container>
     )
 }
+
+
+export const Card = memo(CardFormat)
+
 
 const Container = styled.div`
     margin: 0 auto;
@@ -139,7 +147,9 @@ const AreaMatches = styled.div`
         text-align: center;
         font-size: 18px;
         font-weight: 500;
-        color:${props => props.correct===undefined?"blue":props.correct===false?"red":"green"}
+        color:${
+        props => props.correct===undefined?"black":props.correct===false?"red":props.correct===true?"green":"black"
+        }
     }
 
     span{
