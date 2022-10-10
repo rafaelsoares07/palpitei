@@ -111,8 +111,8 @@ const AreaInputs = styled.div`
     align-items: center;
     justify-content: center;
 
-    background: radial-gradient(ellipse farthest-corner at right bottom, #FEDB37 0%, #FDB931 70.7%, #9f7928 30%, #8A6E2F 40%, transparent 70%),
-                radial-gradient(ellipse farthest-corner at left top, #FFFFFF 0%, #FFFFAC 0%, #D1B464 25%, #5d4a1f 62.5%, #5d4a1f 100%);
+    background: radial-gradient(ellipse farthest-corner at right bottom,#b0544f 0%, #A52A2A 70.7%, #9f7928 30%, #8A6E2F 40%, transparent 70%),
+                radial-gradient(ellipse farthest-corner at left top, #FFFFFF 0%, #FFFFAC 0%,#D1B464 25%, #5d4a1f 62.5%, #5d4a1f 100%);
 
     img{
         margin-top: -25px;
