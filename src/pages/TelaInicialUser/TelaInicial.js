@@ -7,14 +7,36 @@ import TokenContext from "../../context/tokenContext"
 
 import Palpite from "./Palpite"
 
+import togleBTN from "../../images/icones/togle.png"
+import togleClose from "../../images/icones/close.png"
+
+import * as React from 'react';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import Divider from '@mui/material/Divider';
+import {Navigate,useNavigate } from "react-router-dom"
+
+
+
 
 
 export default function TelaInicial() {
 
+  const style = {
+  width: '100%',
+  bgcolor: 'background.paper'
+};
+
+
+  const [togleBtn, setTogleBtn] = useState(false)
+  console.log(togleBtn)
+
+  const navigate = useNavigate()
+
   const {token, setToken, setUserLogado, userLogado,permissions,setPermissions} = useContext(TokenContext)
 
   const [matches, setMatches] = useState([])
-
 
   const URL = "http://localhost:5001"
 
@@ -38,8 +60,36 @@ export default function TelaInicial() {
 
         <AreaPalpites>
           <Header />
-          <Titulo>
-            <p>Fase de Grupos</p>
+          <Titulo >
+            <Icon active={togleBtn} >
+
+              <span onClick={()=>setTogleBtn(!togleBtn)}>
+                <img className="open" src={togleBTN}/>
+              </span>
+  
+            </Icon>
+              
+            <Itens active={togleBtn} >
+            
+              <span onClick={()=>setTogleBtn(!togleBtn)}>
+                <img className="close" src={togleClose}></img>
+              </span>
+            
+              <List sx={style} component="nav" aria-label="mailbox folders">
+                <Divider />
+                <ListItem button>
+                  <ListItemText primary="Fase de Grupo" onClick={()=>navigate("/home")} />
+                </ListItem>
+                <Divider />
+                <ListItem button divider>
+                  <ListItemText primary="Fase Mata-Mata" />
+                </ListItem>
+                <ListItem button>
+                  <ListItemText primary="Jogos do Dia" onClick={()=>navigate("/matchesByDay")} />
+                </ListItem>
+              </List>
+            </Itens>
+
           </Titulo>
 
           {
@@ -69,14 +119,52 @@ const AreaPalpites = styled.div`
     margin: 0 auto;
     max-width: 450px;
     min-height: 100vh;
-    background-image: radial-gradient(circle at 111.24% 14.64%, #ffff49 0, #e9d01d 50%, #897300 100%);
+    background-color: #aa443f;
 `
 const Titulo = styled.div`
-    padding: 10px;
-    p{
-      font-size:24px;
-      font-family: 'Roboto', sans-serif;
-      font-weight: 600;
-    }
+   
+   display: flex;
+   flex-direction: column;
+   align-items: flex-end;
+
+   p{
+    background-color: blue;
+   }
     
+    
+`
+
+const Icon = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+
+  img.open{
+    margin-top: 8px;
+    margin-right: 10px;
+    width: 25px;
+    cursor: pointer;
+    display:${props=>props.active===true?"none":"block"};
+  }
+  
+`
+
+const Itens = styled.div`
+  
+  display: none;
+  width: 100%;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  display:${props=>props.active===true?"flex":"none"};
+
+
+  img.close{
+    margin-top: 8px;
+    margin-right: 10px;
+    width: 25px;
+    cursor: pointer;
+  }
 `
