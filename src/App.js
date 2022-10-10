@@ -7,9 +7,11 @@ import SignIn from "./pages/SignIn/SignIn"
 import SignUp from "./pages/Signup/SignUp"
 import PainelControl from "./pages/TelaAdmin/PainelControl"
 import TelaInicial from "./pages/TelaInicialUser/TelaInicial"
+import TelaDay from "./pages/TelaMatchesByDay/TelaDay"
 
 import TokenContext from "./context/tokenContext"
 
+import GlobalStyle from "./styles/global"
 
 function App() {
 
@@ -20,10 +22,12 @@ function App() {
   return (
   <TokenContext.Provider value={{token,setToken,userLogado,setUserLogado,permissions,setPermissions}}>
     <BrowserRouter>
+
       <Routes>
         <Route path="/" element={<SignIn/>}/>
         <Route path="/cadastro" element={<SignUp/>}/>
-        <Route path="home" element={<TelaInicial/>}/>
+        <Route path="/home" element={<TelaInicial/>}/>
+        <Route path="/matchesByDay" element={<TelaDay/>}/>          
 
         <Route 
         path = "/painel-control" 
@@ -35,8 +39,9 @@ function App() {
             <PainelControl/>
           </ProtectRouter>}
         />
-
       </Routes>
+
+      <GlobalStyle/>
     </BrowserRouter>
   </TokenContext.Provider>
   )
