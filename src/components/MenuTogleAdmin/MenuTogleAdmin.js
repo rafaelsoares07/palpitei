@@ -42,16 +42,10 @@ export default function TogleMenu(){
               <List sx={style} component="nav" aria-label="mailbox folders">
                 <Divider />
                 <ListItem button>
-                  <ListItemText primary="Fase de Grupo" onClick={()=>navigate("/home")} />
+                  <ListItemText primary="Inserir Resultado de partida" onClick={()=>navigate("/insertResult")} />
                 </ListItem>
-                <Divider />
-                <ListItem button divider>
-                  <ListItemText primary="Fase Mata-Mata" />
-                  <img width={"22px"} src={closeLocked}/>
-                </ListItem>
-                <ListItem button>
-                  <ListItemText primary="Jogos do Dia" onClick={()=>navigate("/matchesByDay")} />
-                </ListItem>
+
+                 
               </List>
             </Itens>
 
