@@ -2,6 +2,9 @@ import styled from "styled-components"
 
 import { useState, useContext} from "react"
 
+import TogleMenu from "../../components/MenuTogleAdmin/MenuTogleAdmin"
+
+
 import Header from "../../components/Header/Header"
 import TokenContext from "../../context/tokenContext"
 
@@ -16,7 +19,7 @@ export default function PainelControl() {
         <AreaPalpites>
           <Header />
           <Titulo>
-            <p>DashBoard Administrador</p>
+            <TogleMenu/>
           </Titulo>
 
         </AreaPalpites>
@@ -41,7 +44,7 @@ const AreaPalpites = styled.div`
     background-color:#ff963c;
 `
 const Titulo = styled.div`
-    padding: 10px;
+   
     p{
       font-size:24px;
       font-family: 'Roboto', sans-serif;
