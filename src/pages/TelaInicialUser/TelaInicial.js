@@ -22,7 +22,7 @@ import UrlContext from "../../context/urlContext"
 
 import closeLocked from "../../images/icones/fechadura.png"
 
-import TogleMenu from "../../components/Menu Togle/TogleMenu"
+import TogleMenu from "../../components/MenuTogle/TogleMenu"
 
 export default function TelaInicial() {
 
