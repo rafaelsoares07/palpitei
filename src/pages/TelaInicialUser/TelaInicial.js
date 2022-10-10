@@ -20,6 +20,9 @@ import {Navigate,useNavigate } from "react-router-dom"
 
 import UrlContext from "../../context/urlContext"
 
+import closeLocked from "../../images/icones/fechadura.png"
+
+import TogleMenu from "../../components/Menu Togle/TogleMenu"
 
 export default function TelaInicial() {
 
@@ -62,37 +65,7 @@ export default function TelaInicial() {
 
         <AreaPalpites>
           <Header />
-          <Titulo >
-            <Icon active={togleBtn} >
-
-              <span onClick={()=>setTogleBtn(!togleBtn)}>
-                <img className="open" src={togleBTN}/>
-              </span>
-  
-            </Icon>
-              
-            <Itens active={togleBtn} >
-            
-              <span onClick={()=>setTogleBtn(!togleBtn)}>
-                <img className="close" src={togleClose}></img>
-              </span>
-            
-              <List sx={style} component="nav" aria-label="mailbox folders">
-                <Divider />
-                <ListItem button>
-                  <ListItemText primary="Fase de Grupo" onClick={()=>navigate("/home")} />
-                </ListItem>
-                <Divider />
-                <ListItem button divider>
-                  <ListItemText primary="Fase Mata-Mata" />
-                </ListItem>
-                <ListItem button>
-                  <ListItemText primary="Jogos do Dia" onClick={()=>navigate("/matchesByDay")} />
-                </ListItem>
-              </List>
-            </Itens>
-
-          </Titulo>
+          <TogleMenu/>
 
           {
             matches.map((item,i)=>
@@ -122,51 +95,4 @@ const AreaPalpites = styled.div`
     max-width: 450px;
     min-height: 100vh;
     background-color: #aa443f;
-`
-const Titulo = styled.div`
-   
-   display: flex;
-   flex-direction: column;
-   align-items: flex-end;
-
-   p{
-    background-color: blue;
-   }
-    
-    
-`
-
-const Icon = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-
-  img.open{
-    margin-top: 8px;
-    margin-right: 10px;
-    width: 25px;
-    cursor: pointer;
-    display:${props=>props.active===true?"none":"block"};
-  }
-  
-`
-
-const Itens = styled.div`
-  
-  display: none;
-  width: 100%;
-  background-color: white;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  display:${props=>props.active===true?"flex":"none"};
-
-
-  img.close{
-    margin-top: 8px;
-    margin-right: 10px;
-    width: 25px;
-    cursor: pointer;
-  }
 `
