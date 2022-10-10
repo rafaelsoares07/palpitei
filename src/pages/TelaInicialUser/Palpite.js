@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import styled from "styled-components"
 
-import Card from "./Card"
+import {Card} from "./Card"
 
 import arrowLeft from "../../images/icones/arrow-left.svg"
 import arrowRight from "../../images/icones/arrow-right.svg"
@@ -17,7 +17,6 @@ export default function SimpleAccordion({groupName,roundOne,roundTwo,roundTree})
 
     const [round, setRound] = useState(1)
 
-    
     function incrementRound(){
         const currentRound = round
         if(currentRound<3){
@@ -36,10 +35,10 @@ export default function SimpleAccordion({groupName,roundOne,roundTwo,roundTree})
             setRound(3)
         }
     }
-
     const round1 = roundOne
     const round2 = roundTwo
     const round3 = roundTree
+
 
   return (
     <div>
@@ -55,6 +54,7 @@ export default function SimpleAccordion({groupName,roundOne,roundTwo,roundTree})
         </AccordionSummary>
         <AccordionDetails>
           <Matches>
+
             <Slider>
                 <img src={arrowLeft} onClick={decrementRound}/>
                 <span>{round}º Rodada</span>
@@ -62,29 +62,21 @@ export default function SimpleAccordion({groupName,roundOne,roundTwo,roundTree})
                 
             </Slider>
 
-            
             <Aux1 visible={round}>
                 <Card matche={round1} i={0}/>
                 <Card matche={round1} i={1}/>
             </Aux1>
-            
-            
             
             <Aux2 visible={round}>
                 <Card matche={round2} i={0}/>
                 <Card matche={round2} i={1}/>
             </Aux2>
             
-
-            
             <Aux3 visible={round}>
                 <Card matche={round3} i={0}/>
                 <Card matche={round3} i={1}/>
             </Aux3>
             
-            
-            
-
           </Matches>
         </AccordionDetails>
       </Accordion>
@@ -100,10 +92,9 @@ const Container = styled.div`
     margin: 15px;
     
 `
-
 const Matches = styled.div`
     width: 100%;
-    height: 150px;
+    height: 170px;
     border: 0.2px solid #ded8cf;
 `
 const Slider = styled.div`
