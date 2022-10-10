@@ -18,6 +18,8 @@ import togleClose from "../../images/icones/close.png"
 
 import {Card} from "../TelaMatchesByDay/Card"
 
+import UrlContext from "../../context/urlContext"
+
 export default function TelaInicial() {
 
     const style = {
@@ -35,7 +37,8 @@ export default function TelaInicial() {
 
     console.log(matches)
 
-    const URL = "http://localhost:5001"
+    const URL = useContext(UrlContext)
+    console.log(URL)
 
     const currentDay = dayjs().format("DD-MM-YYYY")
     console.log(currentDay)

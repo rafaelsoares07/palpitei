@@ -18,7 +18,7 @@ import Divider from '@mui/material/Divider';
 import {Navigate,useNavigate } from "react-router-dom"
 
 
-
+import UrlContext from "../../context/urlContext"
 
 
 export default function TelaInicial() {
@@ -38,7 +38,9 @@ export default function TelaInicial() {
 
   const [matches, setMatches] = useState([])
 
-  const URL = "http://localhost:5001"
+  const URL = useContext(UrlContext)
+
+  console.log(URL)
 
   useEffect(()=>{
 

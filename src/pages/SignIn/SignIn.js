@@ -9,6 +9,7 @@ import axios from "axios"
 import logo from "../../images/logo_palpitei.png"
 
 import TokenContext from "../../context/tokenContext"
+import UrlContext from "../../context/urlContext"
 
 
 export default function SignIn(){
@@ -28,7 +29,9 @@ export default function SignIn(){
     const [password, setPassword] = useState("")
 
 
-    const URL = "http://localhost:5001"
+    const URL = useContext(UrlContext)
+
+    console.log(URL)
 
     const user = {
         email: email,

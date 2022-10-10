@@ -1,11 +1,13 @@
 import styled from "styled-components"
 import axios from "axios"
-import { Link, Navigate,useNavigate } from "react-router-dom"
-import { useState, useEffect } from "react"
+import { Link, Navigate,useNavigate} from "react-router-dom"
+import { useState, useEffect, useContext} from "react"
 
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
+import UrlContext from "../../context/urlContext";
 
 
 import logo from "../../images/logo_palpitei.png"
@@ -26,7 +28,9 @@ export default function SignUp() {
     const [password, setPassword] = useState("")
     const [confirmPassword, setConfirmPassword] = useState("")
 
-    const URL = "http://localhost:5001"
+    const URL = useContext(UrlContext)
+
+    console.log(URL)
 
     const user = {
         name: name,

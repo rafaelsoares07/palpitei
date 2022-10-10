@@ -3,7 +3,7 @@ import styled from "styled-components"
 
 import axios from "axios"
 import TokenContext from "../../context/tokenContext"
-
+import UrlContext from "../../context/urlContext"
 
 function CardFormat({ matche }) {
 
@@ -18,7 +18,9 @@ function CardFormat({ matche }) {
     let formatHora = hora.substring(11, 16)
 
 
-    const URL = "http://localhost:5001"
+    const URL = useContext(UrlContext)
+
+    console.log(URL)
 
     const config = {
         headers: {

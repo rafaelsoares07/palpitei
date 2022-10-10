@@ -1,6 +1,7 @@
 import { useState } from "react"
 import {BrowserRouter, Routes, Route} from "react-router-dom"
 
+
 import ProtectRouter from "./Authorization"
 
 import SignIn from "./pages/SignIn/SignIn"
@@ -10,16 +11,23 @@ import TelaInicial from "./pages/TelaInicialUser/TelaInicial"
 import TelaDay from "./pages/TelaMatchesByDay/TelaDay"
 
 import TokenContext from "./context/tokenContext"
+import UrlContext from "./context/urlContext"
 
 import GlobalStyle from "./styles/global"
 
 function App() {
+
+  console.log(process.env.REACT_APP_MODE)
+  const url = process.env.REACT_APP_MODE==="DEV"?"http://localhost:5001":"https://palpitei.herokuapp.com"
+  const [URL] = useState(url)
 
   const [token,setToken] = useState("")
   const [userLogado, setUserLogado] = useState("")
   const [permissions, setPermissions] = useState([])
 
   return (
+  
+  <UrlContext.Provider value={URL}>
   <TokenContext.Provider value={{token,setToken,userLogado,setUserLogado,permissions,setPermissions}}>
     <BrowserRouter>
 
@@ -44,6 +52,7 @@ function App() {
       <GlobalStyle/>
     </BrowserRouter>
   </TokenContext.Provider>
+  </UrlContext.Provider>
   )
 }
 
