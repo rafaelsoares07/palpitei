@@ -1,13 +1,24 @@
+import { Navigate , useNavigate} from "react-router-dom"
 import styled from "styled-components"
 
 import logo from "../../images/logo_name.png"
-
+import logout from "../../images/icones/logout.png"
 export default function Header(){
+
+    const navigate = useNavigate()
+
+    function logoutUser(){
+        localStorage.clear()
+        navigate("/")
+    }
+
+
+
     return(
         <Container>
             <Profile>
                 <img src={logo}/>
-                <ion-icon name="person-circle-outline"></ion-icon>
+                <img className="logout" src={logout} onClick={logoutUser}/>
             </Profile>
         </Container>
         
@@ -17,16 +28,12 @@ export default function Header(){
 
 const Container = styled.div`
     width: 100%;
-    height: 90px;
-    background-color: #aa443f;
+    height: 80px;
+    background-color: white;
 
     display: flex;
     justify-content: center;
     align-items: center;
-
-    border-bottom-left-radius: 25px;
-    border-bottom-right-radius: 25px;
-
 
 `
 
@@ -40,6 +47,10 @@ const Profile = styled.div`
 
     img{
         width: 180px;
+        margin: 5px;
+    }
+    img.logout{
+        width: 35px;
     }
 
 `
